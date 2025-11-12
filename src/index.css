@@ -88,6 +88,11 @@ All colors MUST be HSL.
   .shadow-float {
     box-shadow: var(--shadow-float);
   }
+
+  .backdrop-blur-glass {
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+  }
 }
 
 @layer base {

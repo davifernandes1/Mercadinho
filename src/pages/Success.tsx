@@ -1,6 +1,5 @@
-import { CheckCircle2 } from "lucide-react";
-import { useEffect } from "react";
 import { useNavigate } from "react-router-dom";
+import { useEffect } from "react";
 import { useCart } from "@/context/CartContext";
 
 const Success = () => {
@@ -12,15 +11,35 @@ const Success = () => {
     const timer = setTimeout(() => {
       navigate("/");
     }, 10000);
-
     return () => clearTimeout(timer);
   }, [navigate, clearCart]);
 
   return (
-    <div className="min-h-screen bg-background flex items-center justify-center p-8">
-      <div className="text-center animate-scale-in">
-        <div className="mb-8 inline-block">
-          <CheckCircle2 className="w-32 h-32 text-success animate-scale-in" />
+    <div className="min-h-screen bg-background flex items-center justify-center p-8 animate-fade-in">
+      <div className="text-center max-w-2xl animate-scale-in">
+        <div className="w-32 h-32 rounded-full bg-success/10 flex items-center justify-center mx-auto mb-8">
+          <svg className="w-16 h-16" viewBox="0 0 50 50">
+            <circle
+              cx="25"
+              cy="25"
+              r="20"
+              fill="none"
+              stroke="hsl(var(--success))"
+              strokeWidth="3"
+              className="animate-scale-in"
+            />
+            <path
+              d="M15 25 L22 32 L35 18"
+              fill="none"
+              stroke="hsl(var(--success))"
+              strokeWidth="3"
+              strokeLinecap="round"
+              strokeLinejoin="round"
+              strokeDasharray="100"
+              className="animate-draw-check"
+              style={{ animationDelay: "0.2s" }}
+            />
+          </svg>
         </div>
 
         <h1 className="text-5xl font-bold text-primary mb-4">

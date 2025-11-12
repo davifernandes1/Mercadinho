@@ -20,10 +20,10 @@ const AdminLogin = () => {
   };
 
   return (
-    <div className="min-h-screen bg-background flex items-center justify-center p-8">
-      <div className="fixed inset-0 bg-black/50 animate-fade-in" onClick={() => navigate("/")} />
+    <div className="min-h-screen bg-background/80 backdrop-blur-glass flex items-center justify-center p-8 animate-fade-in">
+      <div className="fixed inset-0 bg-black/50 backdrop-blur-glass" onClick={() => navigate("/")} />
       
-      <div className="relative bg-card rounded-3xl border-2 border-border shadow-float p-8 w-full max-w-md animate-scale-in">
+      <div className="relative bg-card rounded-3xl border border-border shadow-float p-12 w-full max-w-md animate-scale-in z-10">
         <Button
           variant="ghost"
           size="icon"

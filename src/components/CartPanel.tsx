@@ -12,10 +12,10 @@ export const CartPanel = () => {
   return (
     <>
       <div
-        className="fixed inset-0 bg-black/50 z-30 animate-fade-in"
+        className="fixed inset-0 bg-black/50 backdrop-blur-glass z-30 animate-fade-in"
         onClick={() => setIsCartOpen(false)}
       />
-      <div className="fixed right-0 top-0 h-full w-full max-w-md bg-card z-40 shadow-float animate-slide-in-right flex flex-col">
+      <div className="fixed right-0 top-0 h-full w-full max-w-md bg-card z-40 shadow-float animate-slide-in-right flex flex-col border-l border-border">
         <div className="flex items-center justify-between p-6 border-b border-border">
           <h2 className="text-2xl font-bold text-primary">Seu Carrinho</h2>
           <Button

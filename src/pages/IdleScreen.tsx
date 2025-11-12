@@ -32,17 +32,17 @@ const IdleScreen = () => {
         aria-label="Admin access"
       />
 
-      <div className="relative z-10 text-center px-8 animate-fade-in">
-        <h1 className="text-6xl font-bold text-white mb-4 drop-shadow-lg">
+      <div className="relative z-10 text-center px-8 animate-scale-in">
+        <h1 className="text-6xl font-bold text-white mb-4 drop-shadow-2xl">
           Mercadinho do Condomínio
         </h1>
-        <p className="text-2xl text-white mb-12 drop-shadow-lg">
+        <p className="text-2xl text-white mb-12 drop-shadow-2xl">
           Bem-vindo! Produtos frescos e de qualidade para você.
         </p>
 
         <Button
           onClick={() => navigate("/home")}
-          className="h-20 px-12 text-2xl font-bold bg-secondary hover:bg-secondary/90 text-secondary-foreground shadow-float smooth-transition rounded-2xl"
+          className="h-20 px-12 text-2xl font-bold bg-white text-primary hover:bg-white/90 shadow-float hover:shadow-[0_12px_40px_rgba(0,0,0,0.2)] transition-all duration-300 rounded-2xl hover:scale-105"
         >
           Toque para Iniciar
         </Button>

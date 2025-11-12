@@ -8,7 +8,7 @@ const Checkout = () => {
   const { items, totalPrice } = useCart();
 
   return (
-    <div className="min-h-screen bg-background">
+    <div className="min-h-screen bg-background animate-slide-in-right">
       <header className="bg-card border-b border-border p-6 shadow-elegant">
         <div className="max-w-4xl mx-auto flex items-center gap-4">
           <Button

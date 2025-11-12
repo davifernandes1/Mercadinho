@@ -25,7 +25,7 @@ const Payment = () => {
   };
 
   return (
-    <div className="min-h-screen bg-background flex items-center justify-center p-8">
+    <div className="min-h-screen bg-background flex items-center justify-center p-8 animate-slide-in-right">
       <div className="max-w-2xl w-full text-center animate-scale-in">
         <h1 className="text-4xl font-bold text-primary mb-4">Pague com PIX</h1>
         <p className="text-xl text-muted-foreground mb-12">

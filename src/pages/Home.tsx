@@ -19,7 +19,7 @@ const Home = () => {
   const navigate = useNavigate();
 
   return (
-    <div className="min-h-screen bg-background">
+    <div className="min-h-screen bg-background animate-fade-in">
       <CustomerSidebar />
       <CartPanel />
       <FloatingCart />
