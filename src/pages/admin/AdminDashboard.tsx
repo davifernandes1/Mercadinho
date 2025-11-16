@@ -1,30 +1,27 @@
+import { useState } from "react"; // Importar
 import { Package, AlertTriangle, TrendingDown, DollarSign, ShoppingCart } from "lucide-react";
 import { CustomerSidebar } from "@/components/CustomerSidebar";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 
+// Mover mocks para fora do componente
+const mockLowStock = [
+  { name: "Guaraná Antarctica 2L", stock: 3 },
+  { name: "Energético Red Bull", stock: 8 },
+];
+const mockOutOfStock = [{ name: "Suco Del Valle 1L", stock: 0 }];
+const mockSlowMoving = [{ name: "Produto X", lastSale: "há 15 dias" }];
+const mockSalesData = [
+  { day: "Seg", value: 450 }, { day: "Ter", value: 680 }, { day: "Qua", value: 520 },
+  { day: "Qui", value: 890 }, { day: "Sex", value: 1200 }, { day: "Sáb", value: 1500 },
+  { day: "Dom", value: 980 },
+];
+
 const AdminDashboard = () => {
-  const lowStockProducts = [
-    { name: "Guaraná Antarctica 2L", stock: 3 },
-    { name: "Energético Red Bull", stock: 8 },
-  ];
-
-  const outOfStockProducts = [
-    { name: "Suco Del Valle 1L", stock: 0 },
-  ];
-
-  const slowMovingProducts = [
-    { name: "Produto X", lastSale: "há 15 dias" },
-  ];
-
-  const salesData = [
-    { day: "Seg", value: 450 },
-    { day: "Ter", value: 680 },
-    { day: "Qua", value: 520 },
-    { day: "Qui", value: 890 },
-    { day: "Sex", value: 1200 },
-    { day: "Sáb", value: 1500 },
-    { day: "Dom", value: 980 },
-  ];
+  // Usar useState para os dados
+  const [lowStockProducts, setLowStockProducts] = useState(mockLowStock);
+  const [outOfStockProducts, setOutOfStockProducts] = useState(mockOutOfStock);
+  const [slowMovingProducts, setSlowMovingProducts] = useState(mockSlowMoving);
+  const [salesData, setSalesData] = useState(mockSalesData);
 
   const maxValue = Math.max(...salesData.map((d) => d.value));
 
@@ -35,6 +32,7 @@ const AdminDashboard = () => {
       <main className="ml-20 p-8">
         <h1 className="text-4xl font-bold text-primary mb-8">Dashboard Administrativo</h1>
 
+        {/* --- INÍCIO DO CÓDIGO JSX QUE FALTAVA --- */}
         <div className="grid grid-cols-4 gap-6 mb-8">
           <Card className="border-none shadow-elegant hover:shadow-float transition-all duration-300 bg-gradient-to-br from-warning/10 to-warning/5">
             <CardHeader className="pb-3">
@@ -48,7 +46,8 @@ const AdminDashboard = () => {
               </div>
             </CardHeader>
             <CardContent>
-              <div className="text-4xl font-bold text-foreground">2</div>
+              {/* Usando o state */}
+              <div className="text-4xl font-bold text-foreground">{lowStockProducts.length}</div>
               <p className="text-sm text-muted-foreground mt-1">produtos</p>
             </CardContent>
           </Card>
@@ -65,7 +64,8 @@ const AdminDashboard = () => {
               </div>
             </CardHeader>
             <CardContent>
-              <div className="text-4xl font-bold text-foreground">1</div>
+              {/* Usando o state */}
+              <div className="text-4xl font-bold text-foreground">{outOfStockProducts.length}</div>
               <p className="text-sm text-muted-foreground mt-1">produto</p>
             </CardContent>
           </Card>
@@ -82,7 +82,8 @@ const AdminDashboard = () => {
               </div>
             </CardHeader>
             <CardContent>
-              <div className="text-4xl font-bold text-foreground">1</div>
+              {/* Usando o state */}
+              <div className="text-4xl font-bold text-foreground">{slowMovingProducts.length}</div>
               <p className="text-sm text-muted-foreground mt-1">produto</p>
             </CardContent>
           </Card>
@@ -114,6 +115,7 @@ const AdminDashboard = () => {
           </CardHeader>
           <CardContent>
             <div className="flex items-end justify-between gap-6 h-64 px-4">
+              {/* Usando o state */}
               {salesData.map((item, index) => (
                 <div key={item.day} className="flex-1 flex flex-col items-center gap-3">
                   <div
@@ -143,6 +145,7 @@ const AdminDashboard = () => {
             </CardHeader>
             <CardContent>
               <div className="space-y-3">
+                {/* Usando o state */}
                 {lowStockProducts.map((product, index) => (
                   <div
                     key={product.name}
@@ -168,6 +171,7 @@ const AdminDashboard = () => {
             </CardHeader>
             <CardContent>
               <div className="space-y-3">
+                {/* Usando o state */}
                 {slowMovingProducts.map((product, index) => (
                   <div
                     key={product.name}
@@ -182,6 +186,7 @@ const AdminDashboard = () => {
             </CardContent>
           </Card>
         </div>
+        {/* --- FIM DO CÓDIGO JSX QUE FALTAVA --- */}
       </main>
     </div>
   );
