@@ -1,48 +1,72 @@
-🚀 Guia de Instalação e Execução
+<h1 align="center">🛒 Mercadinho Kiosk Self-Service</h1>
 
-1. Clonar e Configurar o Ambiente
+<p align="center">
+  Um sistema de autoatendimento moderno e intuitivo, desenvolvido para agilizar compras em mini-markets e mercados de condomínio.<br>
+  Projeto Full Stack com CRUD completo para gestão de estoque e fluxo otimizado para o cliente.
+</p>
 
-# Clone o repositório na branch de desenvolvimento
-git clone -b develop [https://github.com/davifernandes1/Mercadinho.git](https://github.com/davifernandes1/Mercadinho.git)
-cd Mercadinho 
+---
 
+## ✨ Tecnologias Utilizadas
 
-2. Configurar e Iniciar o Backend (API)
+| Categoria        | Tecnologias Chave |
+|------------------|-------------------|
+| **Frontend**     | ⚛️ React, TypeScript, Tailwind CSS, shadcn/ui |
+| **Backend**      | 🟢 Node.js, Express, Mongoose |
+| **Banco de Dados** | 🍃 MongoDB (Atlas) |
+| **Utilitários**  | 🔄 TanStack Query (Gerenciamento de Cache) |
 
-O Backend roda na porta 3001.
+---
 
-a. Configuração de Variáveis (Atenção!)
+## 🛠️ Pré-requisitos
 
-Crie o arquivo .env DENTRO da pasta backend/ e adicione sua URI do MongoDB Atlas.
+Certifique-se de ter instalado:
 
-Arquivo: backend/.env
+- Node.js (v18+ recomendado)  
+- npm  
+- MongoDB Atlas ou instância local (URI de conexão)
+
+---
+
+## 🚀 Guia de Instalação e Execução
+
+### 1️⃣ Clonar e Configurar o Ambiente
+
+# Clone o repositório na branch develop
+git clone -b develop https://github.com/davifernandes1/Mercadinho.git
+cd Mercadinho
+
+2️⃣ Configurar e Iniciar o Backend (API)
+
+O Backend roda na porta 3001
+
+a. Criar variáveis de ambiente (⚠️ Essencial)
+
+Crie o arquivo backend/.env:
 
 # SUBSTITUA PELAS SUAS CREDENCIAIS
 MONGO_URI=mongodb+srv://[USUARIO]:[SENHA]@[CLUSTER].mongodb.net/?appName=Bancodedados
 
-
-b. Instalar e Iniciar
-
-# Navega para a pasta do Backend
+b. Instalar dependências e iniciar
 cd backend
 npm install
 npm run dev
 
+✅ STATUS: Servidor iniciado em http://localhost:3001
 
-🟢 STATUS: O servidor iniciará em http://localhost:3001. Ele fará o seeding (população inicial) do banco de dados com produtos mockados (se a coleção estiver vazia).
+Se o banco estiver vazio, o sistema fará o seeding automaticamente.
 
-3. Iniciar o Frontend (Kiosk)
+3️⃣ Iniciar o Frontend (Kiosk)
 
-O Frontend roda na porta 8080.
+O Frontend roda na porta 8080
 
-# Volta para a raiz do projeto (Mercadinho/)
-cd .. 
+# Volta para a raiz do projeto
+cd ..
 
-# Entra na pasta do Frontend (ajuste se necessário)
-cd frontend/mercadinho-kiosk 
+# Entra na pasta do frontend (ajuste se necessário)
+cd frontend/mercadinho-kiosk
 
 npm install
 npm run dev
 
-
-🟢 STATUS: A aplicação React estará disponível em: http://localhost:8080
+✅ STATUS: Aplicação disponível em http://localhost:8080
