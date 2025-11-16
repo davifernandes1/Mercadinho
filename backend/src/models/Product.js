@@ -1,17 +1,37 @@
-const mongoose = require('mongoose');
-const { Schema } = mongoose;
+import mongoose from 'mongoose';
 
-const ProductSchema = new Schema({
-  name: { type: String, required: true },
-  description: { type: String },
-  price: { type: Number, required: true },
-  stock: { type: Number, required: true, default: 0 },
-  image: { type: String, required: true },
-  category: { 
-    type: String, // Usando o ID string (ex: 'bebidas')
-    ref: 'Category', // Aponta para o modelo 'Category'
-    required: true 
+const productSchema = new mongoose.Schema({
+  name: {
+    type: String,
+    required: true,
+    trim: true // Remove espaços em branco
   },
+  price: {
+    type: Number,
+    required: true,
+    min: 0 // Preço não pode ser negativo
+  },
+  stock: {
+    type: Number,
+    required: true,
+    min: 0,
+    default: 0 // Começa com 0 se não for fornecido
+  },
+  category: {
+    type: String,
+    required: true,
+    trim: true,
+    lowercase: true // Facilita a filtragem (ex: "bebidas", "padaria")
+  },
+  image: {
+    type: String,
+    required: false, // Deixa como opcional por enquanto
+    default: ''
+  }
+}, {
+  timestamps: true // Adiciona 'createdAt' e 'updatedAt' automaticamente
 });
 
-module.exports = mongoose.model('Product', ProductSchema);
+// Cria e exporta o modelo
+const Product = mongoose.model('Product', productSchema);
+export default Product;

@@ -1,16 +1,17 @@
 {
   "name": "kiosk-backend",
   "version": "1.0.0",
-  "main": "src/server.js",
+  "main": "server.js",
+  "type": "module",
   "scripts": {
-    "dev": "nodemon src/server.js",
+    "dev": "nodemon server.js",
     "lint": "eslint .",
     "test": "jest",
     "test:coverage": "jest --coverage"
   },
   "dependencies": {
     "cors": "^2.8.5",
-    "dotenv": "^16.4.5",
+    "dotenv": "^16.6.1",
     "express": "^4.19.2",
     "mongoose": "^8.4.3"
   },
