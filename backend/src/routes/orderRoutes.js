@@ -1,8 +1,9 @@
-const express = require('express');
+import express from 'express';
 const router = express.Router();
-const orderController = require('../controllers/orderController');
+// Usamos "import * as" para importar todas as exportações nomeadas (export const)
+import * as orderController from '../controllers/orderController.js';
 
 router.get('/', orderController.getAllOrders);
 router.post('/', orderController.createOrder);
 
-module.exports = router;
+export default router;

@@ -4,32 +4,32 @@ const productSchema = new mongoose.Schema({
   name: {
     type: String,
     required: true,
-    trim: true // Remove espaços em branco
+    trim: true 
   },
   price: {
     type: Number,
     required: true,
-    min: 0 // Preço não pode ser negativo
+    min: 0 
   },
   stock: {
     type: Number,
     required: true,
     min: 0,
-    default: 0 // Começa com 0 se não for fornecido
+    default: 0 
   },
   category: {
     type: String,
     required: true,
     trim: true,
-    lowercase: true // Facilita a filtragem (ex: "bebidas", "padaria")
+    lowercase: true 
   },
   image: {
     type: String,
-    required: false, // Deixa como opcional por enquanto
+    required: false, 
     default: ''
   }
 }, {
-  timestamps: true // Adiciona 'createdAt' e 'updatedAt' automaticamente
+  timestamps: true 
 });
 
 // Cria e exporta o modelo

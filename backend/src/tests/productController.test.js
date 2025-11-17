@@ -1,56 +1,46 @@
-const Product = require('../models/Product');
+// Arquivo: src/tests/productController.test.js
 
-// Middleware de tratamento de erro genérico
-const handleError = (res, err, message = 'Erro desconhecido') => {
-  console.error(err);
-  // --- CORREÇÃO AQUI ---
-  // Se for um erro de validação (ex: campo 'name' faltando)
-  if (err.name === 'ValidationError') {
-    return res.status(400).json({ message: err.message, error: err });
-  }
-  // --- FIM DA CORREÇÃO ---
-  return res.status(500).json({ message, error: err.message });
-};
+import { describe, it, expect, afterEach, jest } from '@jest/globals';
+import request from 'supertest';
+import app from '../../app.js';
+import Product from '../models/Product.js'; // Importa o mock
 
-// READ all
-exports.getAllProducts = async (req, res) => {
-  try {
-    const products = await Product.find().populate('category');
-    res.json(products);
-  } catch (err) {
-    handleError(res, err, 'Erro ao buscar produtos');
-  }
-};
+// Mock de dados
+const mockProducts = [
+  { _id: '1', name: 'Coca-Cola', price: 8.99, category: 'bebidas' },
+  { _id: '2', name: 'Pão Francês', price: 0.75, category: 'padaria' },
+];
 
-// CREATE
-exports.createProduct = async (req, res) => {
-  try {
-    const product = new Product(req.body);
-    await product.save(); // Esta linha vai disparar o erro de validação
-    res.status(201).json(product);
-  } catch (err) {
-    handleError(res, err, 'Erro ao criar produto'); // Agora o erro 400 será tratado
-  }
-};
+describe('API de Produtos (/api/products)', () => {
 
-// UPDATE
-exports.updateProduct = async (req, res) => {
-  try {
-    const product = await Product.findByIdAndUpdate(req.params.id, req.body, { new: true, runValidators: true });
-    if (!product) return res.status(404).json({ message: 'Produto não encontrado' });
-    res.json(product);
-  } catch (err) {
-    handleError(res, err, 'Erro ao atualizar produto');
-  }
-};
+  afterEach(() => {
+    jest.clearAllMocks();
+  });
 
-// DELETE
-exports.deleteProduct = async (req, res) => {
-  try {
-    const product = await Product.findByIdAndDelete(req.params.id);
-    if (!product) return res.status(404).json({ message: 'Produto não encontrado' });
-    res.json({ message: 'Produto deletado com sucesso' });
-  } catch (err) {
-    handleError(res, err, 'Erro ao deletar produto');
-  }
-};
+  // Teste do GET (Caminho Feliz)
+  it('Deve buscar todos os produtos', async () => {
+    Product.find.mockReturnValue({
+      populate: jest.fn().mockResolvedValue(mockProducts)
+    });
+
+    const res = await request(app).get('/api/products');
+
+    expect(res.statusCode).toEqual(200);
+    expect(res.body.length).toEqual(2);
+    expect(res.body[0].name).toEqual('Coca-Cola');
+  });
+
+  // Teste do POST (Caminho Feliz)
+  it('Deve criar um novo produto', async () => {
+    const newProduct = { name: 'Bolo de Chocolate', price: 7.00, stock: 15, category: 'padaria' };
+    
+    // O mock de 'save' já foi configurado no setup.js
+    
+    const res = await request(app).post('/api/products').send(newProduct);
+
+    expect(res.statusCode).toEqual(201);
+    expect(res.body.name).toEqual('Bolo de Chocolate');
+    // Verifique se o construtor do Product foi chamado
+    expect(Product).toHaveBeenCalledWith(newProduct);
+  });
+});

@@ -1,8 +1,8 @@
-const Settings = require('../models/Settings');
+import Settings from '../models/Settings.js';
 const SETTINGS_ID = "60d5f9f6e3b3c3b3c3b3c3b3"; // ID Fixo (use um ObjectId válido)
 
 // GET
-exports.getSettings = async (req, res) => {
+export const getSettings = async (req, res) => {
   try {
     // Tenta encontrar, ou cria se não existir
     let settings = await Settings.findById(SETTINGS_ID);
@@ -17,7 +17,7 @@ exports.getSettings = async (req, res) => {
 };
 
 // UPDATE
-exports.updateSettings = async (req, res) => {
+export const updateSettings = async (req, res) => {
   try {
     // No futuro, aqui você deve criptografar o req.body.adminPin se ele for alterado
     const settings = await Settings.findByIdAndUpdate(SETTINGS_ID, req.body, { new: true, upsert: true });

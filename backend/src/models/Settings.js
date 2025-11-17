@@ -1,4 +1,4 @@
-const mongoose = require('mongoose');
+import mongoose from 'mongoose';
 const { Schema } = mongoose;
 
 const SettingsSchema = new Schema({
@@ -7,4 +7,5 @@ const SettingsSchema = new Schema({
   adminPin: { type: String, required: true }, // No futuro, armazene isso como hash
 });
 
-module.exports = mongoose.model('Settings', SettingsSchema);
+const Settings = mongoose.model('Settings', SettingsSchema);
+export default Settings;

@@ -1,6 +1,9 @@
-const request = require('supertest');
-const app = require('../app'); // Importa o app (sem o .listen())
-const Category = require('../models/Category'); // Importa o mock
+// Arquivo: src/tests/categoryController.test.js
+
+import { describe, it, expect, afterEach, jest } from '@jest/globals';
+import request from 'supertest';
+import app from '../../app.js'; // Caminho corrigido
+import Category from '../models/Category.js'; // Importa o mock
 
 // Mock de dados
 const mockCategories = [

@@ -1,7 +1,8 @@
-const express = require('express');
+import express from 'express';
 const router = express.Router();
-const categoryController = require('../controllers/categoryController');
+// Usamos "import * as" para importar todas as exportações nomeadas (export const)
+import * as categoryController from '../controllers/categoryController.js';
 
 router.get('/', categoryController.getAllCategories);
 
-module.exports = router;
+export default router;

@@ -1,4 +1,4 @@
-const mongoose = require('mongoose');
+import mongoose from 'mongoose';
 const { Schema } = mongoose;
 
 const CategorySchema = new Schema({
@@ -9,4 +9,5 @@ const CategorySchema = new Schema({
   _id: { type: String, required: true },
 }, { _id: false }); // Desabilitar _id automático
 
-module.exports = mongoose.model('Category', CategorySchema);
+const Category = mongoose.model('Category', CategorySchema);
+export default Category;

@@ -1,9 +1,9 @@
-const Order = require('../models/Order');
-const Product = require('../models/Product');
-const mongoose = require('mongoose');
+import Order from '../models/Order.js';
+import Product from '../models/Product.js';
+import mongoose from 'mongoose';
 
 // READ all
-exports.getAllOrders = async (req, res) => {
+export const getAllOrders = async (req, res) => {
   try {
     const orders = await Order.find().sort({ createdAt: -1 }); // Mais recentes primeiro
     res.json(orders);
@@ -14,11 +14,9 @@ exports.getAllOrders = async (req, res) => {
 };
 
 // CREATE Order (REGRA DE NEGÓCIO DE ESTOQUE)
-exports.createOrder = async (req, res) => {
+export const createOrder = async (req, res) => {
   const { items, total } = req.body;
   
-  // Inicia uma "Sessão" do MongoDB para garantir que todas as operações
-  // de estoque funcionem, ou nenhuma delas (Transação)
   const session = await mongoose.startSession();
   session.startTransaction();
 
@@ -76,7 +74,6 @@ exports.createOrder = async (req, res) => {
     // 7. Se algo deu errado, reverter (abortar) a transação
     await session.abortTransaction();
     console.error(err);
-    // Retorna o erro específico (ex: "Estoque insuficiente...")
     res.status(400).json({ message: err.message || 'Erro ao processar pedido' });
   } finally {
     // 8. Fechar a sessão

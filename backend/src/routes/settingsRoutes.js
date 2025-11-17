@@ -1,8 +1,9 @@
-const express = require('express');
+import express from 'express';
 const router = express.Router();
-const settingsController = require('../controllers/settingsController');
+// Usamos "import * as" para importar todas as exportações nomeadas (export const)
+import * as settingsController from '../controllers/settingsController.js';
 
 router.get('/', settingsController.getSettings);
 router.put('/', settingsController.updateSettings);
 
-module.exports = router;
+export default router;
