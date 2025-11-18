@@ -1,10 +1,10 @@
-// Caminho: src/components/ProductModal.tsx
-
+//
 import { X, Plus, Minus } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { useCart } from "@/context/CartContext";
-import { useState, useEffect } from "react"; // Adicionado useEffect
-import { Product } from "@/lib/products"; // Importando a interface
+import { useState, useEffect } from "react";
+import { Product } from "@/lib/products";
+import { toast } from "sonner";
 
 interface ProductModalProps {
   product: Product | null;
@@ -20,7 +20,6 @@ export const ProductModal = ({
   const { addItem } = useCart();
   const [quantity, setQuantity] = useState(1);
 
-  // Reseta a quantidade para 1 toda vez que o modal/produto mudar
   useEffect(() => {
     setQuantity(1);
   }, [product]);
@@ -29,11 +28,19 @@ export const ProductModal = ({
 
   const handleAddToCart = () => {
     addItem(product, quantity);
-    onClose(); // Fecha o modal
+    onClose();
   };
 
   const handleQuantityChange = (amount: number) => {
-    setQuantity((prev) => Math.max(1, prev + amount));
+    // Impede que a quantidade ultrapasse o stock
+    setQuantity((prev) => {
+      const newQuantity = prev + amount;
+      if (newQuantity > product.stock) {
+        toast.warning("Limite de stock atingido!");
+        return prev;
+      }
+      return Math.max(1, newQuantity);
+    });
   };
 
   return (
@@ -43,9 +50,7 @@ export const ProductModal = ({
         onClick={onClose}
       />
 
-      {/* --- LAYOUT CORRIGIDO --- */}
       <div className="fixed top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 z-50">
-        {/* Aumentei o tamanho máximo e removi o padding principal */}
         <div className="relative bg-card rounded-3xl border border-border shadow-float w-full max-w-2xl animate-scale-in overflow-hidden">
           <Button
             variant="ghost"
@@ -56,16 +61,13 @@ export const ProductModal = ({
             <X className="w-6 h-6" />
           </Button>
 
-          {/* Container Flex (vertical no celular, horizontal no desktop) */}
           <div className="flex flex-col md:flex-row">
-            {/* Imagem (ocupa metade no desktop) */}
             <img
               src={product.image}
               alt={product.name}
               className="w-full md:w-1/2 h-64 md:h-96 object-cover flex-shrink-0"
             />
             
-            {/* Conteúdo (ocupa outra metade e tem seu próprio padding) */}
             <div className="p-8 flex flex-col flex-1">
               <h1 className="text-3xl font-bold text-primary mb-2">
                 {product.name}
@@ -76,8 +78,12 @@ export const ProductModal = ({
               <p className="text-muted-foreground mb-6 text-sm">
                 {product.description || "Este produto não possui descrição."}
               </p>
+              
+              {/* Exibe stock disponível */}
+              <p className="text-sm text-muted-foreground mb-4">
+                Stock disponível: <span className="font-bold text-foreground">{product.stock}</span>
+              </p>
 
-              {/* Empurra os botões para baixo */}
               <div className="mt-auto">
                 <div className="flex items-center gap-4 mb-6">
                   <span className="text-lg font-semibold">Quantidade:</span>
@@ -98,6 +104,8 @@ export const ProductModal = ({
                     size="icon"
                     className="h-10 w-10"
                     onClick={() => handleQuantityChange(1)}
+                    // Desabilita se tentar passar do stock
+                    disabled={quantity >= product.stock}
                   >
                     <Plus className="w-5 h-5" />
                   </Button>

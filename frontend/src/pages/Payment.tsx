@@ -1,32 +1,44 @@
+//
 import { Copy, Loader2 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { useNavigate } from "react-router-dom";
-import { useEffect, useState } from "react";
+import { useEffect, useState, useRef } from "react";
 import { toast } from "sonner";
+import { useCart } from "@/context/CartContext"; // Importar contexto
 
 const Payment = () => {
   const navigate = useNavigate();
-  // Estado para controlar a UI (não chama API)
-  const [isProcessing, setIsProcessing] = useState(true); 
+  const { processPayment } = useCart(); // Função real de pagamento
+  const [status, setStatus] = useState<"processing" | "success" | "error">("processing");
+  const hasProcessed = useRef(false); // Evitar chamada dupla no React StrictMode
 
   useEffect(() => {
-    // 1. Simula o "processamento" do pagamento por 5 segundos
-    const processingTimer = setTimeout(() => {
-      setIsProcessing(false); // Muda a UI para "Pagamento confirmado!"
+    if (hasProcessed.current) return;
+    hasProcessed.current = true;
 
-      // 2. Após confirmar, espera 3 segundos e navega para a tela de sucesso
-      const redirectTimer = setTimeout(() => {
-        navigate("/success");
-      }, 3000);
+    const executePayment = async () => {
+      // Simula um pequeno delay de processamento do PIX
+      await new Promise(resolve => setTimeout(resolve, 3000));
 
-      return () => clearTimeout(redirectTimer);
-    }, 5000); // 5 segundos de simulação
+      // Chama o backend
+      const result = await processPayment();
+      
+      if (result.success) {
+        setStatus("success");
+        toast.success("Pagamento confirmado!");
+        setTimeout(() => navigate("/success"), 2000);
+      } else {
+        setStatus("error");
+        toast.error(`Erro: ${result.message}`);
+        // Em caso de erro, pode voltar ao carrinho ou tentar novamente
+        setTimeout(() => navigate("/cart"), 3000); 
+      }
+    };
 
-    return () => clearTimeout(processingTimer);
-  }, [navigate]);
+    executePayment();
+  }, [navigate, processPayment]);
 
   const handleCopyPix = () => {
-    // Ação de copiar para o clipboard (não chama API)
     navigator.clipboard.writeText("00020126580014br.gov.bcb.pix0136a629532e-7693-4846-852d-1bbff6b2e6125204000053039865802BR5913Loja Digital6009SAO PAULO62070503***63041D3D");
     toast.success("Chave PIX copiada!");
   };
@@ -40,11 +52,11 @@ const Payment = () => {
         </p>
 
         <div className="bg-card rounded-3xl border-2 border-border shadow-float p-12 mb-8">
-          <div className="w-80 h-80 mx-auto bg-muted rounded-2xl flex items-center justify-center mb-8">
-            <div className="text-center">
-              <div className="w-64 h-64 bg-white p-4 rounded-xl">
-                {/* Seu QR Code SVG ... */}
-                <svg viewBox="0 0 100 100" className="w-full h-full">
+           {/* (QR Code SVG mantido igual ao original...) */}
+           <div className="w-80 h-80 mx-auto bg-muted rounded-2xl flex items-center justify-center mb-8">
+             <div className="text-center">
+                <div className="w-64 h-64 bg-white p-4 rounded-xl">
+                 <svg viewBox="0 0 100 100" className="w-full h-full">
                   <rect width="100" height="100" fill="white"/>
                   <path d="M10,10 h15 v15 h-15 z M30,10 h5 v5 h-5 z M40,10 h5 v5 h-5 z M50,10 h5 v5 h-5 z M65,10 h15 v15 h-15 z" fill="black"/>
                   <path d="M12,12 h11 v11 h-11 z M67,12 h11 v11 h-11 z" fill="white"/>
@@ -56,8 +68,8 @@ const Payment = () => {
                   <path d="M30,75 h5 v5 h-5 z M40,75 h15 v5 h-15 z M60,75 h10 v5 h-10 z M75,75 h5 v5 h-5 z" fill="black"/>
                 </svg>
               </div>
-            </div>
-          </div>
+             </div>
+           </div>
 
           <Button
             onClick={handleCopyPix}
@@ -70,10 +82,18 @@ const Payment = () => {
         </div>
 
         <div className="flex items-center justify-center gap-3 text-muted-foreground">
-          <Loader2 className="w-6 h-6 animate-spin" />
-          <p className="text-lg">
-            {isProcessing ? "Aguardando confirmação do pagamento..." : "Pagamento confirmado!"}
-          </p>
+          {status === "processing" && (
+            <>
+              <Loader2 className="w-6 h-6 animate-spin" />
+              <p className="text-lg">A aguardar confirmação do pagamento...</p>
+            </>
+          )}
+          {status === "success" && (
+             <p className="text-lg text-green-600 font-bold">Pagamento confirmado!</p>
+          )}
+          {status === "error" && (
+             <p className="text-lg text-red-600 font-bold">Erro no pagamento.</p>
+          )}
         </div>
       </div>
     </div>
