@@ -57,22 +57,15 @@ const Home = () => {
 
       <main className="ml-20 p-8">
         <header className="mb-8">
-          <div className="flex items-center gap-4 max-w-2xl">
-            <h1 className="text-3xl font-bold text-primary whitespace-nowrap">
+          <div className="flex items-center justify-center gap-4 w-full">
+            <h1 className="text-4xl font-bold text-primary whitespace-nowrap">
               Mercadinho
             </h1>
-            <div className="relative flex-1">
-              <Search className="absolute left-4 top-1/2 -translate-y-1/2 text-muted-foreground w-5 h-5" />
-              <Input
-                placeholder="O que você procura hoje?"
-                className="pl-12 h-14 text-lg rounded-2xl border-2"
-              />
-            </div>
           </div>
         </header>
 
         <section className="mb-12">
-          <div className="relative h-80 rounded-3xl overflow-hidden shadow-elegant">
+          <div className="relative h-96 rounded-3xl overflow-hidden shadow-elegant">
             <img
               src="https://images.unsplash.com/photo-1542838132-92c53300491e?w=1200&h=400&fit=crop"
               alt="Produtos Frescos"
