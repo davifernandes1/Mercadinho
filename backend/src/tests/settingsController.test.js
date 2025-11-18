@@ -1,11 +1,9 @@
-// Arquivo: src/tests/settingsController.test.js
-
 import { describe, it, expect, afterEach, jest } from '@jest/globals';
 import request from 'supertest';
-import app from '../../app.js'; // Caminho corrigido
+import app from '../../app.js'; 
 import Settings from '../models/Settings.js';
 
-const SETTINGS_ID = "60d5f9f6e3b3c3b3c3b3c3b3"; // ID Fixo
+const SETTINGS_ID = "60d5f9f6e3b3c3b3c3b3c3b3"; 
 const mockSettings = {
   _id: SETTINGS_ID,
   marketName: 'Meu Mercadinho',
@@ -29,8 +27,8 @@ describe('API de Configurações (/api/settings)', () => {
   });
 
   it('Deve criar as configurações se elas não existirem', async () => {
-    Settings.findById.mockResolvedValue(null); // Simula não encontrar
-    // O mock de 'prototype.save' já está no setup.js
+    Settings.findById.mockResolvedValue(null); 
+
     
     const res = await request(app).get('/api/settings');
 

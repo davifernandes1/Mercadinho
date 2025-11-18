@@ -1,11 +1,9 @@
-// Arquivo: src/tests/orderController.test.js
-
 import { describe, it, expect, afterEach, jest } from '@jest/globals';
 import request from 'supertest';
-import app from '../../app.js'; // Caminho corrigido
+import app from '../../app.js'; 
 import Order from '../models/Order.js';
 import Product from '../models/Product.js';
-import mongoose from 'mongoose'; // Usado para o mock da sessão
+import mongoose from 'mongoose'; 
 
 // Mock de dados
 const mockOrders = [
@@ -52,16 +50,16 @@ describe('API de Pedidos (/api/orders)', () => {
       session: jest.fn().mockResolvedValue(mockProductsInDb)
     });
     
-    // Simula o bulkWrite (não precisamos checar o resultado)
+   
     Product.bulkWrite.mockResolvedValue({});
 
-    // O mock de 'save' e 'session' já está no setup.js
+  
     
     const res = await request(app).post('/api/orders').send(newOrderPayload);
 
     expect(res.statusCode).toEqual(201);
     expect(res.body.total).toEqual(30);
-    // Verifica se a transação foi "comitada"
+   
     expect(mongoose.startSession).toHaveBeenCalled();
   });
 
@@ -72,7 +70,7 @@ describe('API de Pedidos (/api/orders)', () => {
       items: [ { id: 'prod2', name: 'Produto 2', quantity: 100, price: 20 } ] // Estoque é 10
     };
 
-    // Simula a busca de produtos no banco
+ 
     Product.find.mockReturnValue({
       session: jest.fn().mockResolvedValue(mockProductsInDb)
     });
@@ -81,7 +79,7 @@ describe('API de Pedidos (/api/orders)', () => {
 
     expect(res.statusCode).toEqual(400);
     expect(res.body.message).toContain('Estoque insuficiente');
-    // Verifica se a transação foi "abortada"
+
     expect(mongoose.startSession).toHaveBeenCalled();
   });
 });

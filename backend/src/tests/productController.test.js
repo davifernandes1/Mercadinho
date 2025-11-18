@@ -1,10 +1,7 @@
-// Arquivo: src/tests/productController.test.js
-
 import { describe, it, expect, afterEach, jest } from '@jest/globals';
 import request from 'supertest';
 import app from '../../app.js';
-import Product from '../models/Product.js'; // Importa o mock
-
+import Product from '../models/Product.js'; 
 // Mock de dados
 const mockProducts = [
   { _id: '1', name: 'Coca-Cola', price: 8.99, category: 'bebidas' },
@@ -30,17 +27,17 @@ describe('API de Produtos (/api/products)', () => {
     expect(res.body[0].name).toEqual('Coca-Cola');
   });
 
-  // Teste do POST (Caminho Feliz)
+  // Teste do POST
   it('Deve criar um novo produto', async () => {
     const newProduct = { name: 'Bolo de Chocolate', price: 7.00, stock: 15, category: 'padaria' };
     
-    // O mock de 'save' já foi configurado no setup.js
+
     
     const res = await request(app).post('/api/products').send(newProduct);
 
     expect(res.statusCode).toEqual(201);
     expect(res.body.name).toEqual('Bolo de Chocolate');
-    // Verifique se o construtor do Product foi chamado
+  
     expect(Product).toHaveBeenCalledWith(newProduct);
   });
 });

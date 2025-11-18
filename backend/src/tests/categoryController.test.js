@@ -1,11 +1,9 @@
-// Arquivo: src/tests/categoryController.test.js
-
 import { describe, it, expect, afterEach, jest } from '@jest/globals';
 import request from 'supertest';
-import app from '../../app.js'; // Caminho corrigido
-import Category from '../models/Category.js'; // Importa o mock
+import app from '../../app.js'; 
+import Category from '../models/Category.js'; 
 
-// Mock de dados
+
 const mockCategories = [
   { _id: 'bebidas', name: 'Bebidas', icon: 'Coffee', image_url: '...' },
   { _id: 'padaria', name: 'Padaria', icon: 'Sandwich', image_url: '...' },
@@ -17,9 +15,8 @@ describe('API de Categorias (/api/categories)', () => {
     jest.clearAllMocks();
   });
 
-  // Teste do GET (Caminho Feliz)
+
   it('Deve buscar todas as categorias', async () => {
-    // Simula o Mongoose retornando os dados
     Category.find.mockResolvedValue(mockCategories);
 
     const res = await request(app).get('/api/categories');
@@ -32,7 +29,7 @@ describe('API de Categorias (/api/categories)', () => {
 
   // Teste do GET (Caminho Triste - Erro de Servidor)
   it('Deve retornar 500 se o banco de dados falhar', async () => {
-    // Simula o Mongoose dando um erro
+
     Category.find.mockRejectedValue(new Error('Falha de conexão'));
 
     const res = await request(app).get('/api/categories');

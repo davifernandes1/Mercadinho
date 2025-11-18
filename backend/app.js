@@ -2,13 +2,13 @@ import express from 'express';
 import cors from 'cors';
 import Product from './src/models/Product.js'; 
 import { mockProducts } from './seed/mockData.js';
-import allRoutes from './src/routes/index.js'; // <-- IMPORTA O ROTEADOR
+import allRoutes from './src/routes/index.js'; 
 
 const app = express();
 app.use(cors());
-app.use(express.json()); // Middleware para ler JSON do body
+app.use(express.json());
 
-// --- Função de Seeding (Pode continuar aqui) ---
+
 const seedDatabase = async () => {
   try {
     const productCount = await Product.countDocuments();
